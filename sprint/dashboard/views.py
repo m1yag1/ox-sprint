@@ -9,15 +9,6 @@ dash = Blueprint('dashboard',
                  template_folder='../templates/dashboard')
 
 
-def parse_info(json_data):
-    """
-    Takes the
-    :param json_data:
-    :return:
-    """
-    return json_data['_json_data']
-
-
 def make_example_data():
     Repository = namedtuple('Repository', 'author name')
 
