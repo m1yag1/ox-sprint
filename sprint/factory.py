@@ -1,6 +1,7 @@
 from flask import Flask
 
-from sprint.helpers import register_blueprints
+from .helpers import register_blueprints
+from .redis_session import RedisSessionInterface
 
 
 def create_app(package_name, package_path, settings=None):
@@ -25,6 +26,10 @@ def create_app(package_name, package_path, settings=None):
 
     if settings:
         app.config.update(settings)
+
+    # Use redis sessions
+    app.session_interface = RedisSessionInterface(
+        redis_host=app.config['REDIS_HOST'])
 
     # Helper for auto-registering blueprints
     register_blueprints(app, package_name, package_path)
