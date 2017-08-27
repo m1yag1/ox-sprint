@@ -21,6 +21,7 @@ setup(
             'pytest==3.1.3',
             'pytest-runner==2.11.1',
             'pytest-cov==2.5.1',
+            'WebTest==2.0.23'
         ]
     },
     tests_require=[

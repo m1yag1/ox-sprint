@@ -8,6 +8,7 @@ node_modules/
 .cache/
 .coverage
 .coverage.*
+cov.xml
 .hypothesis/
 .tox/
 
