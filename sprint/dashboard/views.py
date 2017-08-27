@@ -1,8 +1,12 @@
+import logging
 from collections import namedtuple
 
 from flask import Blueprint, render_template
 
-from github3 import gh
+from github3 import gh, GitHubError
+
+__logs__ = logging.getLogger(__name__)
+
 
 dash = Blueprint('dashboard',
                  __name__,
@@ -10,6 +14,12 @@ dash = Blueprint('dashboard',
 
 
 def make_example_data():
+    """
+    Temoporary utility to generate example data while trying to figure out
+    how I want the widgets to look like.
+
+    :return: example_data
+    """
     Repository = namedtuple('Repository', 'author name')
 
     repos = [
@@ -24,8 +34,12 @@ def make_example_data():
     example_data = []
 
     for r in repos:
-        repository = gh.repository(r.author, r.name)
-        example_data.append(repository)
+        try:
+            repository = gh.repository(r.author, r.name)
+            example_data.append(repository)
+        except GitHubError:
+            __logs__.error('The example data was unable to be loaded. The free'
+                             'API limit was probably reached.')
 
     return example_data
 
@@ -33,5 +47,4 @@ def make_example_data():
 @dash.route('/', methods=['GET'])
 def dashboard():
     dash_data = make_example_data()
-
     return render_template('dashboard.html', data=dash_data)

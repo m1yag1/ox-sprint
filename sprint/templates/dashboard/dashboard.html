@@ -9,12 +9,15 @@
       <div class="col s6">
         <div class="card-panel">
           <span class="card-title">Example GitHub</span>
-
+          {% if data %}
           <div class="collection">
             {% for r in data %}
             <a href="https://github.com/{{ r.full_name }}" class="collection-item"><span class="badge">{{ r.open_issues }}</span>{{ r.full_name }}</a>
             {% endfor %}
           </div>
+          {% else %}
+            <span>There is no example data at the moment =(</span>
+          {% endif %}
         </div>
       </div>
 
